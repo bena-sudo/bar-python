@@ -1,14 +1,26 @@
 from datetime import datetime
 
 class Order:
-    def __init__(self,table,products):
+    def __init__(self,table,numclients,client,waiter,products):
         self.__table = table
+        self.__numClients = numclients
+        self.__client = client
+        self.__waiter = waiter
         self.__products = products
         self.__date = datetime.now()
         self.__tprice = 0.0
 
     def getTabla(self):
         return self.__table
+    
+    def getNumClients(self):
+        return self.__numClients
+    
+    def getClient(self):
+        return self.__client
+
+    def getWaiter(self):
+        return self.__waiter
 
     def getProducts(self):
         return self.__products
@@ -31,5 +43,5 @@ class Order:
         produ = self.__products
         for x in produ:
             products += x.getName() + " "
-        result = "Table: " + str(self.__table)+" / Date: "+str(self.__date)+" / Products: "+str(products)+" / Total price: "+str(price)
+        result = "Table: " + str(self.__table)+ " / Num clientes: " + str(self.__numClients)+ " / Client: "+ str(self.__client) + " / Waiter: "+ str(self.__waiter) +" / Date: "+str(self.__date)+" / Products: "+str(products)+" / Total price: "+str(price)
         return result
