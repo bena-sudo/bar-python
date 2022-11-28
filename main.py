@@ -4,8 +4,8 @@ from order import Order
 
 controller = ControllerBar()
 
-def listCategory():
-    print("---- CARTA ----")
+def listCard():
+    print("---- CARD ----")
     categorys = controller.getCategorys()
     for id,cate in categorys.items():
         print(cate.getName())
@@ -25,45 +25,74 @@ controller.loadCategorys()
 controller.loadProducts()
 
 while True:
+    # SHOW MENU
     menuOptions()
-    opc = int(input("Oprtion: "))
+    opc = int(input("Option: "))
     if opc == 0:
+        # GET ALL ORDERS
         orders = controller.getOrders()
-        total = 0    
+        # CALCULATE TOTAL PRICE OF THE DAY
+        total = 0 
         for id,ord in orders.items():
             total += ord.getTprice()
         print("Total cash: ",total)
         break
+
     elif opc == 1:
-        listCategory()
+        # SHOW CART
+        listCard()
+        # NUMBER TABLE
         table = input("Table: ")
+        # NUMBER CLIENTS
+        numclients = int(input("Number of clients: "))
+        # NAME CLIENT
+        client = input("Name of the client: ")
+        # WAITER
+        waiter = input("Name of the waiter: ")
+        # PRODUCTS
         products = []
         while True:
-            product = input("NameProduct: ")
+            # NAME
+            product = input("NameProduct (0 to end): ")
             if product == "0":
                     break
+            # ADD PRODUCTS
             x = controller.getProduct(product)
             if x != None:
                 products.append(x)
             else:
                 print("ERROR!")
-        order = Order(table,products)
+        # ORDER
+        order = Order(table,numclients,client,waiter,products)
         controller.addOrder(order)
+
     elif opc == 2:
+        # NUMBER TABLE
         table = input("Table: ")
-        products = []
+        order = controller.getOrderByTable(table)
         while True:
-            product = input("NameProduct: ")
+            # NAME
+            product = input("NameProduct (0 to end): ")
             if product == "0":
                     break
+            # ADD PRODUCTS
             x = controller.getProduct(product)
             if x != None:
-                products.append(x)
+                order.addProduct(x)
             else:
                 print("ERROR!")
+    
+    elif opc == 3:
+        # NUMBER TABLE
+        table = input("Table: ")
+        # GET ORDER
+        order = controller.getOrderByTable(table)
+        order.getFinishOrder()
+    
+    else:
+        print("Option incorrect")
 
-
-
+# TEST
 orders = controller.getOrders()    
 for id,ord in orders.items():
         print(id,ord.toString())

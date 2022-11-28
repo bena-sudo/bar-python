@@ -7,6 +7,7 @@ class ControllerBar():
         self.__categorys = {}
         self.__products = {}
         self.__orders = {}
+        self.__con = 0
         
     def loadCategorys(self):
         url = "http://localhost:8069/bar_app/category"
@@ -54,13 +55,14 @@ class ControllerBar():
         return None
 
     def addOrder(self,order):
-        self.__orders[order.getTable()] = order
+        self.__con += 1
+        self.__orders[self.__con] = order
 
     def getOrders(self):
         return self.__orders
 
-    def addOrders(self,table,products):
-        orders = self.__orders
-        if table in self.__orders.keys():
-            
-            
+    def getOrderByTable(self,table):
+        for name,ord in self.__orders.items():
+            if (ord.getTable()==table):
+                return ord
+        return None

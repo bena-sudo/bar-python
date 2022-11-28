@@ -9,8 +9,9 @@ class Order:
         self.__products = products
         self.__date = datetime.now()
         self.__tprice = 0.0
+        self.__finish = False
 
-    def getTabla(self):
+    def getTable(self):
         return self.__table
     
     def getNumClients(self):
@@ -31,17 +32,23 @@ class Order:
     def getTprice(self):
         return self.__tprice
 
-    def getTprice(self):
+    def getFinish(self):
+        return self.__finish
+
+    def addProduct(self,product):
+        self.__products.append(product)
+
+    def getFinishOrder(self):
+        self.__finish = True
         products = self.__products
         for x in products:
             self.__tprice += x.getPrice()
         return self.__tprice
 
     def toString(self):
-        price = self.getTprice()
         products = ""
         produ = self.__products
         for x in produ:
-            products += x.getName() + " "
-        result = "Table: " + str(self.__table)+ " / Num clientes: " + str(self.__numClients)+ " / Client: "+ str(self.__client) + " / Waiter: "+ str(self.__waiter) +" / Date: "+str(self.__date)+" / Products: "+str(products)+" / Total price: "+str(price)
+            products += x.getName() + ", "
+        result = "Table: " + str(self.__table)+ " / Num clientes: " + str(self.__numClients)+ " / Client: "+ str(self.__client) + " / Waiter: "+ str(self.__waiter) +" / Date: "+str(self.__date)+" / Products: "+str(products)+" / Total price: "+str(self.__tprice)
         return result
