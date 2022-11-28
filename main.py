@@ -43,52 +43,62 @@ while True:
         listCard()
         # NUMBER TABLE
         table = input("Table: ")
-        # NUMBER CLIENTS
-        numclients = int(input("Number of clients: "))
-        # NAME CLIENT
-        client = input("Name of the client: ")
-        # WAITER
-        waiter = input("Name of the waiter: ")
-        # PRODUCTS
-        products = []
-        while True:
-            # NAME
-            product = input("NameProduct (0 to end): ")
-            if product == "0":
-                    break
-            # ADD PRODUCTS
-            x = controller.getProduct(product)
-            if x != None:
-                products.append(x)
-            else:
-                print("ERROR!")
-        # ORDER
-        order = Order(table,numclients,client,waiter,products)
-        controller.addOrder(order)
+        order = controller.findOrderByTable(table)
+        if order == None:
+            # NUMBER CLIENTS
+            numclients = int(input("Number of clients: "))
+            # NAME CLIENT
+            client = input("Name of the client: ")
+            # WAITER
+            waiter = input("Name of the waiter: ")
+            # PRODUCTS
+            products = []
+            while True:
+                # NAME
+                product = input("NameProduct (0 to end): ")
+                if product == "0":
+                        break
+                # ADD PRODUCTS
+                x = controller.getProduct(product)
+                if x != None:
+                    products.append(x)
+                else:
+                    print("ERROR!")
+            # ORDER
+            order = Order(table,numclients,client,waiter,products)
+            controller.addOrder(order)
+        else:
+            print("Table is exist.")
+        
 
     elif opc == 2:
         # NUMBER TABLE
         table = input("Table: ")
         order = controller.getOrderByTable(table)
-        while True:
-            # NAME
-            product = input("NameProduct (0 to end): ")
-            if product == "0":
-                    break
-            # ADD PRODUCTS
-            x = controller.getProduct(product)
-            if x != None:
-                order.addProduct(x)
-            else:
-                print("ERROR!")
-    
+        if order == None:
+            print("Table is not exist.")
+        else:
+            while True:
+                # NAME
+                product = input("Name product (0 to end): ")
+                if product == "0":
+                        break
+                # ADD PRODUCTS
+                x = controller.getProduct(product)
+                if x != None:
+                    order.addProduct(x)
+                else:
+                    print("ERROR!")
+        
     elif opc == 3:
         # NUMBER TABLE
         table = input("Table: ")
         # GET ORDER
-        order = controller.getOrderByTable(table)
-        order.getFinishOrder()
-    
+        order = controller.findOrderByTable(table)
+        if (order == None):
+            print("Table is not exist.")
+        else:
+            order.getFinishOrder()
     else:
         print("Option incorrect")
 

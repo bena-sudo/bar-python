@@ -50,5 +50,5 @@ class Order:
         produ = self.__products
         for x in produ:
             products += x.getName() + ", "
-        result = "Table: " + str(self.__table)+ " / Num clientes: " + str(self.__numClients)+ " / Client: "+ str(self.__client) + " / Waiter: "+ str(self.__waiter) +" / Date: "+str(self.__date)+" / Products: "+str(products)+" / Total price: "+str(self.__tprice)
+        result = "Table: " + str(self.__table)+ " / Finish: " + str(self.__finish) + " / Num clientes: " + str(self.__numClients)+ " / Client: "+ str(self.__client) + " / Waiter: "+ str(self.__waiter) +" / Date: "+str(self.__date)+" / Products: "+str(products)+" / Total price: "+str(self.__tprice)
         return result

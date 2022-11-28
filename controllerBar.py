@@ -64,5 +64,13 @@ class ControllerBar():
     def getOrderByTable(self,table):
         for name,ord in self.__orders.items():
             if (ord.getTable()==table):
-                return ord
+                if (ord.getFinish()==True):
+                    return ord
+        return None
+
+    def findOrderByTable(self,table):
+        for name,ord in self.__orders.items():
+            if (ord.getTable()==table):    
+                if (ord.getFinish()==False):
+                    return ord
         return None
