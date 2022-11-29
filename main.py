@@ -58,10 +58,13 @@ while True:
                 product = input("NameProduct (0 to end): ")
                 if product == "0":
                         break
+                # CUANTITY
+                cuantity = int(input("Cuantity: "))
                 # ADD PRODUCTS
                 x = controller.getProduct(product)
                 if x != None:
-                    products.append(x)
+                    for j in range(0,cuantity):
+                        products.append(x)
                 else:
                     print("ERROR!")
             # ORDER
@@ -74,19 +77,21 @@ while True:
     elif opc == 2:
         # NUMBER TABLE
         table = input("Table: ")
-        order = controller.getOrderByTable(table)
+        order = controller.findOrderByTable(table)
         if order == None:
             print("Table is not exist.")
         else:
             while True:
                 # NAME
-                product = input("Name product (0 to end): ")
+                product = input("NameProduct (0 to end): ")
                 if product == "0":
                         break
+                cuantity = int(input("Cuantity: "))
                 # ADD PRODUCTS
                 x = controller.getProduct(product)
                 if x != None:
-                    order.addProduct(x)
+                    for j in range(0,cuantity):
+                        products.append(x)
                 else:
                     print("ERROR!")
         
@@ -100,7 +105,7 @@ while True:
         else:
             order.getFinishOrder()
     else:
-        print("Option incorrect")
+        print("Option incorrect.")
 
 # TEST
 orders = controller.getOrders()    

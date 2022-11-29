@@ -1,5 +1,6 @@
 from product import Product
 from category import Category
+from ingredient import Ingredient
 import requests
 
 class ControllerBar():
@@ -7,6 +8,7 @@ class ControllerBar():
         self.__categorys = {}
         self.__products = {}
         self.__orders = {}
+        self.__ingredients = {}
         self.__con = 0
         
     def loadCategorys(self):
