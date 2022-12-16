@@ -12,7 +12,7 @@ class ControllerBar():
         self.__con = 0
         
     def loadCategorys(self):
-        url = "http://localhost:8069/bar_app/category"
+        url = "http://localhost:8069/bar_app/getAllCategorys"
 
         response = requests.request("GET", url)
         data = response.json()
@@ -25,7 +25,7 @@ class ControllerBar():
         return self.__categorys
 
     def loadProducts(self):
-        url = "http://localhost:8069/bar_app/product"
+        url = "http://localhost:8069/bar_app/getAllProducts"
 
         response = requests.request("GET", url)
         data = response.json()
