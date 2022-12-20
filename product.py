@@ -1,10 +1,17 @@
 class Product:
-    def __init__(self,name,price,category,ingredients,description):
+    def __init__(self,id,name,price,category,ingredients,description):
+        if id == None:
+            self.__id = 0
+        else:
+            self.__id = id
         self.__name = name
         self.__price = price
         self.__category = category
         self.__ingredients = ingredients
         self.__description = description
+
+    def getId(self):
+        return self.__id
 
     def getName(self):
         return self.__name
@@ -20,3 +27,21 @@ class Product:
 
     def getDescription(self):
         return self.__description
+
+    def setId(self,id):
+        self.__id = id
+
+    def setName(self,name):
+        self.__name = name
+
+    def setPrice(self,price):
+        self.__price = price
+
+    def setCategory(self,category):
+        self.__category = category
+
+    def setIngredients(self,ingredients):
+        self.__ingredients = ingredients
+
+    def setDescription(self,description):
+        self.__description = description

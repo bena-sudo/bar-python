@@ -32,12 +32,13 @@ class ControllerBar():
 
         products = data["data"]
         for x in products:
+            id = x["id"]
             name = x["name"]
             price = x["price"]
             category = x["category"]
             ingredients = x["ingredients"]
             description = x["description"]
-            self.__products[name] = Product(name,price,category,ingredients,description)
+            self.__products[name] = Product(id,name,price,category,ingredients,description)
 
     def getProducts(self):
         return self.__products
@@ -71,11 +72,19 @@ class ControllerBar():
         response = requests.request("GET", url=url)
         datajson = response.json()
         data = datajson["data"]    
-        return Ingredient(data["id"],data["name"],data["products"],data["description"])
+        return Ingredient(data["id"],data["name"],data["price"],data["category"],data["ingredients"],data["description"])
 
     def findCategoryById(self,id):
         self.__categorys = {}
         url = "http://localhost:8069/bar_app/getCategory/"+str(id)
+        response = requests.request("GET", url=url)
+        datajson = response.json()
+        data = datajson["data"]    
+        return Category(data["id"],data["name"],data["product"],data["description"])
+
+    def findProductById(self,id):
+        self.__products = {}
+        url = "http://localhost:8069/bar_app/getProduct/"+str(id)
         response = requests.request("GET", url=url)
         datajson = response.json()
         data = datajson["data"]    
@@ -154,6 +163,23 @@ class ControllerBar():
             print(response.status_code)
             print("Error!")
 
+    def createProduct(self,product):
+        url = "http://localhost:8069/bar_app/addProduct"
+
+        querystring = {
+            "name":product.getName(),
+            "price":product.getPrice(),
+            "category":product.getCategory(),
+            "ingredients":product.getIngredients(),
+            "description":product.getDescription()
+        }
+        response = requests.request("POST",url=url,json=querystring)
+
+        if response.status_code == 201:
+            print("Correct, product created!")
+        else:
+            print(response.status_code)
+            print("Error!")
 
     # UPDATE
 
@@ -186,6 +212,23 @@ class ControllerBar():
 
         if response.status_code == 200:
             print("Correct, category update!")
+        else:
+            print("Error!")
+
+    def updateProduct(self,product):
+        url = "http://localhost:8069/bar_app/updateProduct"
+
+        querystring = {
+            "name":product.getName(),
+            "price":product.getPrice(),
+            "category":product.getCategory(),
+            "ingredients":product.getIngredients(),
+            "description":product.getDescription()
+        }
+        response = requests.request("PUT",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, product update!")
         else:
             print("Error!")
 

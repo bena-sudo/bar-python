@@ -2,6 +2,7 @@ from controllerBar import ControllerBar
 from order import Order
 from ingredient import Ingredient
 from category import Category
+from product import Product
 
 
 controller = ControllerBar()
@@ -30,6 +31,13 @@ def listCategory():
     print("Category list:")
     for id,cat in lCat.items():
         print("\t"+str(id) + " " + cat.getName())
+
+def listProducts():
+    controller.loadProducts()
+    lPro = controller.getProducts()
+    print("Product list:")
+    for id,pro in lPro.items():
+        print("\t"+str(pro.getId()) + " " + pro.getName())
 
 def menuOptions():
     print("0.- Finish day.")
@@ -214,7 +222,7 @@ while True:
                     cat.setName(namCat)
                 descCat = input("Category description: ")
                 if descCat != "":
-                    cat.setDescription(namCat)
+                    cat.setDescription(descCat)
                 prodCat = []
                 while(True):
                     opcCat = int(input("Id product (0 to end / -1 to clean list): "))
@@ -232,6 +240,57 @@ while True:
 
             elif opc == 8:
                 listCategory()
+
+
+            elif opc == 9:
+                namePro = input("Product name: ")
+                pricePro = input("Product price: ")
+                catPro = input("Product category id: ")
+                descCat = input("Product description: ")
+                ingCat = []
+                while(True):
+                    opcPro = int(input("Id ingredient (0 to end): "))
+                    if opcPro == 0:
+                        break
+                    ingCat.append(opcPro)
+                product = Product(None,namePro,pricePro,catPro,ingCat,descCat)
+                controller.createProduct(product)
+
+            elif opc == 10:
+                idPro = int(input("Product id: "))
+                pro = controller.findProductById(id)
+                if pro == None:
+                    print("Id not exist!")
+                    break
+                namePro = input("Product name: ")
+                if namePro != "":
+                    pro.setName(namePro)
+                pricePro = float(input("Product price: (0 para no cambiar)"))
+                if pricePro != 0:
+                    pro.setPrice(pricePro)
+                catPro = input("Category id: ")
+                if catPro != "":
+                    pro.setCategory(catPro)
+                descPro = input("Category description: ")
+                if descPro != "":
+                    pro.setDescription(descPro)
+                ingPro = []
+                while(True):
+                    opcIng = int(input("Id product (0 to end / -1 to clean list): "))
+                    if opcIng == 0:
+                        break
+                    elif opcIng == 1:
+                        ingPro = []
+                        break
+                    ingPro.append(opcIng)
+                controller.updateProduct(pro)
+
+            elif opc == 11:
+                id = input("Product id: ")
+                controller.deleteProduct(id)
+
+            elif opc == 12:
+                listProducts()
 
             else:
                 print("Option incorrect.")
