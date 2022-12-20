@@ -51,9 +51,27 @@ class ControllerBar():
         categorys = data["data"]
         for x in categorys:
             self.__ingredients[x["id"]] = Ingredient(x["id"],x["name"],x["products"],x["description"])
+    
+    def loadIngredients(self):
+        self.__ingredients = {}
+        url = "http://localhost:8069/bar_app/getAllIngredients"
+        response = requests.request("GET", url)
+        data = response.json()
+        
+        categorys = data["data"]
+        for x in categorys:
+            self.__ingredients[x["id"]] = Ingredient(x["id"],x["name"],x["products"],x["description"])
 
     def getIngredients(self):
         return self.__ingredients
+
+    def findIngredientById(self,id):
+        self.__ingredients = {}
+        url = "http://localhost:8069/bar_app/getIngredient/"+str(id)
+        response = requests.request("GET", url=url)
+        datajson = response.json()
+        data = datajson["data"]    
+        return Ingredient(data["id"],data["name"],data["products"],data["description"])
 
     #######
     def listProducts(self,category):
@@ -92,12 +110,6 @@ class ControllerBar():
             if (ord.getTable()==table):    
                 if (ord.getFinish()==False):
                     return ord
-        return None
-
-    def findIngredeintById(self,idIng):    
-        for id,ing in self.__ingredients.items():
-            if id == idIng:
-                return ing
         return None
 
     # CREATE

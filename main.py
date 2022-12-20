@@ -145,7 +145,7 @@ while True:
 
             elif opc == 2:
                 idIng = int(input("Ingredient id: "))
-                ing = controller.findIngredeintById(id)
+                ing = controller.findIngredientById(id)
                 if ing == None:
                     print("Id not exist!")
                     break
