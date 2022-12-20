@@ -1,5 +1,6 @@
 from controllerBar import ControllerBar
 from order import Order
+from ingredient import Ingredient
 
 
 controller = ControllerBar()
@@ -15,14 +16,32 @@ def listCard():
             print("\t",prod)
         print("----")
         
+def listIngredients():
+    controller.loadIngredients()
+    lIng = controller.getIngredients()
+    print("Ingredients list:")
+    for id,ing in lIng.items():
+        print("\t"+str(id) + " " + ing.getName())
+
 def menuOptions():
     print("0.- Finish day.")
     print("1.- Add order.")
     print("2.- Modify order.")
     print("3.- Finish order.")
+    print("------------------")
+    print("4.- Options administration.")
+
+def menuAdministration():
+    print("0.- Exit.")
+    print("1.- Create ingredient.")
+    print("2.- Modify ingredient.")
+    print("3.- Delete ingredient.")
+    print("4.- List ingredient.")
+    print("------------------")
 
 controller.loadCategorys()
 controller.loadProducts()
+controller.loadIngredients()
 
 while True:
     # SHOW MENU
@@ -73,7 +92,6 @@ while True:
         else:
             print("Table is exist.")
         
-
     elif opc == 2:
         # NUMBER TABLE
         table = input("Table: ")
@@ -104,6 +122,60 @@ while True:
             print("Table is not exist.")
         else:
             order.getFinishOrder()
+
+    elif opc == 4:
+        while True:
+            # SHOW MENU
+            menuAdministration()
+            opc = int(input("Option: "))
+            if opc == 0:
+                break
+
+            elif opc == 1:
+                nameIng = input("Ingredient name: ")
+                descIng = input("Ingredient description: ")
+                prodIng = []
+                while(True):
+                    opcIng = int(input("Id product (0 to end): "))
+                    if opcIng == 0:
+                        break
+                    prodIng.append(opcIng)
+                ingredient = Ingredient(None,nameIng,prodIng,descIng)
+                controller.createIngredient(ingredient)
+
+            elif opc == 2:
+                idIng = int(input("Ingredient id: "))
+                ing = controller.findIngredeintById(id)
+                if ing == None:
+                    print("Id not exist!")
+                    break
+                nameIng = input("Ingredient name: ")
+                if nameIng != "":
+                    ing.setName(nameIng)
+                descIng = input("Ingredient description: ")
+                if descIng != "":
+                    ing.setDescription(descIng)
+                prodIng = []
+                while(True):
+                    opcIng = int(input("Id product (0 to end / -1 to clean list): "))
+                    if opcIng == 0:
+                        break
+                    elif opcIng ==1:
+                        prodIng = []
+                        break
+                    prodIng.append(opcIng)
+                controller.updateIngredient(ing)
+
+            elif opc == 3:
+                id = input("Ingredient id: ")
+                controller.deleteIngredient(id)
+
+            elif opc == 4:
+                listIngredients()
+            
+            else:
+                print("Option incorrect.")
+
     else:
         print("Option incorrect.")
 

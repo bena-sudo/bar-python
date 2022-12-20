@@ -1,14 +1,33 @@
 class Ingredient:
-    def __init__(self,name,product,description):
+    def __init__(self,id,name,products,description):
+        if id == None:
+            self.__id = 0
+        else:
+            self.__id = id
         self.__name = name
-        self.__product = product
+        self.__products = products
         self.__description = description
 
+    def getId(self):
+        return self.__id
+
     def getName(self):
-        self.__name
+        return self.__name
     
-    def getProduct(self):
-        self.__product
+    def getProducts(self):
+        return self.__products
     
     def getDescription(self):
-        self.__description
+        return self.__description
+
+    def setId(self,id):
+        self.__id = id
+
+    def setName(self,name):
+        self.__name = name
+
+    def setProducts(self,products):
+        self.__products = products
+
+    def setDescription(self,description):
+        self.__description = description

@@ -12,8 +12,8 @@ class ControllerBar():
         self.__con = 0
         
     def loadCategorys(self):
+        self.__categorys = {}
         url = "http://localhost:8069/bar_app/getAllCategorys"
-
         response = requests.request("GET", url)
         data = response.json()
 
@@ -25,8 +25,8 @@ class ControllerBar():
         return self.__categorys
 
     def loadProducts(self):
+        self.__products = {}
         url = "http://localhost:8069/bar_app/getAllProducts"
-
         response = requests.request("GET", url)
         data = response.json()
 
@@ -42,6 +42,20 @@ class ControllerBar():
     def getProducts(self):
         return self.__products
 
+    def loadIngredients(self):
+        self.__ingredients = {}
+        url = "http://localhost:8069/bar_app/getAllIngredients"
+        response = requests.request("GET", url)
+        data = response.json()
+        
+        categorys = data["data"]
+        for x in categorys:
+            self.__ingredients[x["id"]] = Ingredient(x["id"],x["name"],x["products"],x["description"])
+
+    def getIngredients(self):
+        return self.__ingredients
+
+    #######
     def listProducts(self,category):
         products = []
         for name,prod in self.__products.items():
@@ -63,6 +77,9 @@ class ControllerBar():
     def getOrders(self):
         return self.__orders
 
+
+    # FIND
+
     def getOrderByTable(self,table):
         for name,ord in self.__orders.items():
             if (ord.getTable()==table):
@@ -76,3 +93,84 @@ class ControllerBar():
                 if (ord.getFinish()==False):
                     return ord
         return None
+
+    def findIngredeintById(self,idIng):    
+        for id,ing in self.__ingredients.items():
+            if id == idIng:
+                return ing
+        return None
+
+    # CREATE
+
+    def createIngredient(self,ingredient):
+        url = "http://localhost:8069/bar_app/addIngredient"
+
+        querystring = {
+            "name":ingredient.getName(),
+            "description":ingredient.getDescription(),
+            "products":ingredient.getProducts()
+        }
+        response = requests.request("POST",url=url,json=querystring)
+
+        if response.status_code == 201:
+            print("Correct, ingredient created!")
+        else:
+            print(response.status_code)
+            print("Error!")
+
+
+    # UPDATE
+
+    def updateIngredient(self,ingredient):
+        url = "http://localhost:8069/bar_app/updateIngredient"
+
+        querystring = {
+            "id":ingredient.getId(),
+            "name":ingredient.getName(),
+            "description":ingredient.getDescription(),
+            "products":ingredient.getProducts()
+        }
+        response = requests.request("PUT",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, ingredient update!")
+        else:
+            print("Error!")
+
+    # DELETE
+
+    def deleteIngredient(self,id):
+        url = "http://localhost:8069/bar_app/deleteIngredient"
+
+        querystring = {"id":id}
+
+        response = requests.request("DELETE",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, ingredient deleted!")
+        else:
+            print("Error!")
+
+    def deleteCategory(self,id):
+        url = "http://localhost:8069/bar_app/deleteCategory"
+
+        querystring = {"id":id}
+
+        response = requests.request("DELETE",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, category deleted!")
+        else:
+            print("Error!")
+
+    def deleteProduct(self,id):
+        url = "http://localhost:8069/bar_app/deleteProduct"
+
+        querystring = {"id":id}
+
+        response = requests.request("DELETE",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, product deleted!")
+        else:
+            print("Error!")
