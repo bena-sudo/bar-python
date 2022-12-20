@@ -1,6 +1,7 @@
 from controllerBar import ControllerBar
 from order import Order
 from ingredient import Ingredient
+from category import Category
 
 
 controller = ControllerBar()
@@ -23,6 +24,13 @@ def listIngredients():
     for id,ing in lIng.items():
         print("\t"+str(id) + " " + ing.getName())
 
+def listCategory():
+    controller.loadCategorys()
+    lCat = controller.getCategorys()
+    print("Category list:")
+    for id,cat in lCat.items():
+        print("\t"+str(id) + " " + cat.getName())
+
 def menuOptions():
     print("0.- Finish day.")
     print("1.- Add order.")
@@ -37,6 +45,16 @@ def menuAdministration():
     print("2.- Modify ingredient.")
     print("3.- Delete ingredient.")
     print("4.- List ingredient.")
+    print("------------------")
+    print("5.- Create category.")
+    print("6.- Modify category.")
+    print("7.- Delete category.")
+    print("8.- List category.")
+    print("------------------")
+    print("9.- Create product.")
+    print("10.- Modify product.")
+    print("11.- Delete product.")
+    print("12.- List product.")
     print("------------------")
 
 controller.loadCategorys()
@@ -173,6 +191,48 @@ while True:
             elif opc == 4:
                 listIngredients()
             
+            elif opc == 5:
+                nameCat = input("Category name: ")
+                descCat = input("Category description: ")
+                prodCat = []
+                while(True):
+                    opcCat = int(input("Id category (0 to end): "))
+                    if opcCat == 0:
+                        break
+                    prodCat.append(opcCat)
+                category = Category(None,nameCat,prodCat,descCat)
+                controller.createCategory(category)
+
+            elif opc == 6:
+                idCat = int(input("Category id: "))
+                cat = controller.findCategoryById(id)
+                if cat == None:
+                    print("Id not exist!")
+                    break
+                namCat = input("Category name: ")
+                if namCat != "":
+                    cat.setName(namCat)
+                descCat = input("Category description: ")
+                if descCat != "":
+                    cat.setDescription(namCat)
+                prodCat = []
+                while(True):
+                    opcCat = int(input("Id product (0 to end / -1 to clean list): "))
+                    if opcCat == 0:
+                        break
+                    elif opcCat ==1:
+                        prodCat = []
+                        break
+                    prodCat.append(opcIng)
+                controller.updateCategory(ing)
+
+            elif opc == 7:
+                id = input("Category id: ")
+                controller.deleteCategory(id)
+
+            elif opc == 8:
+                listCategory()
+
             else:
                 print("Option incorrect.")
 

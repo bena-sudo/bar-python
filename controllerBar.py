@@ -19,7 +19,7 @@ class ControllerBar():
 
         categorys = data["data"]
         for x in categorys:
-            self.__categorys[x["id"]] = Category(x["name"],x["product"],x["description"])
+            self.__categorys[x["id"]] = Category(x["id"],x["name"],x["product"],x["description"])
 
     def getCategorys(self):
         return self.__categorys
@@ -72,6 +72,14 @@ class ControllerBar():
         datajson = response.json()
         data = datajson["data"]    
         return Ingredient(data["id"],data["name"],data["products"],data["description"])
+
+    def findCategoryById(self,id):
+        self.__categorys = {}
+        url = "http://localhost:8069/bar_app/getCategory/"+str(id)
+        response = requests.request("GET", url=url)
+        datajson = response.json()
+        data = datajson["data"]    
+        return Category(data["id"],data["name"],data["product"],data["description"])
 
     #######
     def listProducts(self,category):
@@ -130,6 +138,22 @@ class ControllerBar():
             print(response.status_code)
             print("Error!")
 
+    def createCategory(self,category):
+        url = "http://localhost:8069/bar_app/addCategory"
+
+        querystring = {
+            "name":category.getName(),
+            "description":category.getDescription(),
+            "product":category.getProducts()
+        }
+        response = requests.request("POST",url=url,json=querystring)
+
+        if response.status_code == 201:
+            print("Correct, ingredient created!")
+        else:
+            print(response.status_code)
+            print("Error!")
+
 
     # UPDATE
 
@@ -145,7 +169,23 @@ class ControllerBar():
         response = requests.request("PUT",url=url,json=querystring)
 
         if response.status_code == 200:
-            print("Correct, ingredient update!")
+            print("Correct, category update!")
+        else:
+            print("Error!")
+
+    def updateCategory(self,category):
+        url = "http://localhost:8069/bar_app/updateCategory"
+
+        querystring = {
+            "id":category.getId(),
+            "name":category.getName(),
+            "description":category.getDescription(),
+            "product":category.getProducts()
+        }
+        response = requests.request("PUT",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, category update!")
         else:
             print("Error!")
 
