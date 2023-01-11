@@ -187,8 +187,6 @@ while True:
                         print("Products: "+str(ing.getProducts()))
                         print("Description: "+ing.getDescription())
 
-
-
                         nameIng = input("Ingredient name: ")
                         if nameIng != "":
                             ing.setName(nameIng)

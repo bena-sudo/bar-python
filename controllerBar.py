@@ -117,7 +117,7 @@ class ControllerBar():
         else:
             print("Error GET")
             return None
-        data = jsondata['data']    
+        data = jsondata["data"]    
         ingredient = Ingredient(data["id"],data["name"],data["products"],data["description"])
         return ingredient
 
@@ -151,7 +151,7 @@ class ControllerBar():
         }
         response = requests.request("POST",url=url,json=querystring)
 
-        if response.status_code == 201:
+        if response.status_code == 200:
             print("Correct, ingredient created!")
         else:
             print(response.status_code)
@@ -167,7 +167,7 @@ class ControllerBar():
         }
         response = requests.request("POST",url=url,json=querystring)
 
-        if response.status_code == 201:
+        if response.status_code == 200:
             print("Correct, ingredient created!")
         else:
             print(response.status_code)
@@ -185,7 +185,7 @@ class ControllerBar():
         }
         response = requests.request("POST",url=url,json=querystring)
 
-        if response.status_code == 201:
+        if response.status_code == 200:
             print("Correct, product created!")
         else:
             print(response.status_code)
