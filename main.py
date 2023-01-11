@@ -156,8 +156,8 @@ while True:
                 break
             # INGREDIENT
             elif opc == 1:
-                menuCRUD("Ingredient")
                 while True:
+                    menuCRUD("Ingredient")
                     opc = int(input("Option: "))
                     # EXIT
                     if opc == 0:
@@ -182,7 +182,6 @@ while True:
                             print("Id not exist!")
                             break
                         # INFO
-                        print("ID: "+ing.getId())
                         print("Name: "+ing.getName())
                         print("Products: "+str(ing.getProducts()))
                         print("Description: "+ing.getDescription())
@@ -199,10 +198,11 @@ while True:
                             opcIng = int(input("Id product (0 to end / -1 to clean list): "))
                             if opcIng == 0:
                                 break
-                            elif opcIng ==1:
+                            elif opcIng == -1:
                                 prodIng = []
                                 break
-                            prodIng.append(opcIng)
+                            else:
+                                prodIng.append(opcIng)
                         controller.updateIngredient(ing)
                     # DELETE
                     elif opc == 3:
@@ -216,7 +216,63 @@ while True:
                         print("Option incorrect!")
             # CATEGORY
             elif opc == 2:
-                menuCRUD("Category")
+                while True:
+                    menuCRUD("Category")
+                    opc = int(input("Option: "))
+                    # EXIT
+                    if opc == 0:
+                        break
+                    # ADD
+                    elif opc == 1:
+                        nameCat = input("Category name: ")
+                        descCat = input("Category description: ")
+                        prodCat = []
+                        while(True):
+                            opcCat = int(input("Id product (0 to end): "))
+                            if opcCat == 0:
+                                break
+                            prodCat.append(opcCat)
+                        category = Category(None,nameCat,prodCat,descCat)
+                        controller.createCategory(category)
+                    # MODIFY
+                    elif opc == 2:
+                        idCat = int(input("Category id: "))
+                        cat = controller.findCategoryById(idCat)
+                        if cat == None:
+                            print("Id not exist!")
+                            break
+                        # INFO
+                        print("Name: "+cat.getName())
+                        print("Products: "+str(cat.getProducts()))
+                        print("Description: "+cat.getDescription())
+
+                        namCat = input("Category name: ")
+                        if namCat != "":
+                            cat.setName(namCat)
+                        descCat = input("Category description: ")
+                        if descCat != "":
+                            cat.setDescription(descCat)
+                        prodCat = []
+                        listProducts()
+                        while(True):
+                            opcCat = int(input("Id product (0 to end / -1 to clean list): "))
+                            if opcCat == 0:
+                                break
+                            elif opcCat == -1:
+                                prodCat = []
+                                break
+                            prodCat.append(opcCat)
+                        controller.updateCategory(cat)
+                    # DELETE
+                    elif opc == 3:
+                        id = input("Category id: ")
+                        controller.deleteCategory(id)
+                    # LIST
+                    elif opc == 4:
+                        listCategory()
+                    # DEFAULT
+                    else:
+                        print("Option incorrect!")
             # PRODUCT
             elif opc == 3:
                 menuCRUD("Product")
@@ -225,51 +281,6 @@ while True:
             else:
                 print("Option incorrect!")
 """
-            
-            
-            elif opc == 5:
-                nameCat = input("Category name: ")
-                descCat = input("Category description: ")
-                prodCat = []
-                while(True):
-                    opcCat = int(input("Id product (0 to end): "))
-                    if opcCat == 0:
-                        break
-                    prodCat.append(opcCat)
-                category = Category(None,nameCat,prodCat,descCat)
-                controller.createCategory(category)
-
-            elif opc == 6:
-                idCat = int(input("Category id: "))
-                cat = controller.findCategoryById(idCat)
-                if cat == None:
-                    print("Id not exist!")
-                    break
-                namCat = input("Category name: ")
-                if namCat != "":
-                    cat.setName(namCat)
-                descCat = input("Category description: ")
-                if descCat != "":
-                    cat.setDescription(descCat)
-                prodCat = []
-                listProducts()
-                while(True):
-                    opcCat = int(input("Id product (0 to end / -1 to clean list): "))
-                    if opcCat == 0:
-                        break
-                    elif opcCat ==1:
-                        prodCat = []
-                        break
-                    prodCat.append(opcCat)
-                controller.updateCategory(cat)
-
-            elif opc == 7:
-                id = input("Category id: ")
-                controller.deleteCategory(id)
-
-            elif opc == 8:
-                listCategory()
-
 
             elif opc == 9:
                 namePro = input("Product name: ")
