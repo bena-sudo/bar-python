@@ -112,14 +112,12 @@ class ControllerBar():
         self.__ingredients = {}
         url = "http://localhost:8069/bar_app/getIngredient/"+str(idd)
         response = requests.request("GET", url)
-        if response.status_code == 200:
-            jsondata = response.json()
-        else:
-            print("Error GET")
-            return None
-        data = jsondata["data"]    
-        ingredient = Ingredient(data["id"],data["name"],data["products"],data["description"])
-        return ingredient
+        jsondata = response.json()
+        data = jsondata["data"]
+        for x in data:
+            ingredient = Ingredient(x["id"],x["name"],x["products"],x["description"])
+            return ingredient
+        
 
     def findCategoryById(self,id):
         self.__categorys = {}
@@ -127,19 +125,22 @@ class ControllerBar():
         response = requests.request("GET", url)
         datajson = response.json()
         data = datajson["data"] 
-
         for x in data:
             cat = Category(x["id"],x["name"],x["product"],x["description"]) 
-        return cat
+            return cat
+        return None
 
     def findProductById(self,id):
         self.__products = {}
         url = "http://localhost:8069/bar_app/getProduct/"+str(id)
         response = requests.request("GET", url)
         datajson = response.json()
-        data = datajson["data"]    
-        return Product(data["id"],data["name"],data["price"],data["category"],data["ingredients"],data["description"])
-
+        data = datajson["data"]  
+        for x in data:
+            pro = Product(x["id"],x["name"],x["price"],x["category"],x["ingredients"],x["description"])
+            return pro
+        return None
+        
     # CREATE
     def createIngredient(self,ingredient):
         url = "http://localhost:8069/bar_app/addIngredient"
