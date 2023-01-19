@@ -269,7 +269,7 @@ while True:
                             if opcPro == 0:
                                 break
                             ingCat.append(opcPro)
-                        product = Product(None,namePro,pricePro,catPro,ingCat,descCat)
+                        product = Product(None,namePro,pricePro,ingCat,descCat)
                         controller.createProduct(product)
                     # MODIFY
                     elif opc == 2:
