@@ -3,8 +3,6 @@ from order import Order
 from ingredient import Ingredient
 from category import Category
 from product import Product
-
-
 controller = ControllerBar()
 
 def listCard():
@@ -200,6 +198,7 @@ while True:
                                 break
                             else:
                                 prodIng.append(opcIng)
+                        ing.setProducts(prodIng)
                         controller.updateIngredient(ing)
                     # DELETE
                     elif opc == 3:
@@ -256,6 +255,7 @@ while True:
                             if opcCat == 0:
                                 break
                             prodCat.append(opcCat)
+                        cat.setProducts(prodCat)
                         controller.updateCategory(cat)
                     # DELETE
                     elif opc == 3:
@@ -279,9 +279,6 @@ while True:
                     elif opc == 1:
                         namePro = input("Product name: ")
                         pricePro = input("Product price: ")
-                        catPro = input("Product category id: (0 to null) ")
-                        if catPro == "0":
-                            catPro = ""
                         descCat = input("Product description: ")
                         ingCat = []
                         while(True):
@@ -294,7 +291,7 @@ while True:
                     # MODIFY
                     elif opc == 2:
                         idPro = int(input("Product id: "))
-                        pro = controller.findProductById(id)
+                        pro = controller.findProductById(idPro)
                         if pro == None:
                             print("Id not exist!")
                             break
@@ -310,9 +307,6 @@ while True:
                         pricePro = float(input("Product price: (0 para no cambiar)"))
                         if pricePro != 0:
                             pro.setPrice(pricePro)
-                        catPro = input("Category id: ")
-                        if catPro != "":
-                            pro.setCategory(catPro)
                         descPro = input("Category description: ")
                         if descPro != "":
                             pro.setDescription(descPro)
@@ -323,6 +317,7 @@ while True:
                             if opcIng == 0:
                                 break
                             ingPro.append(opcIng)
+                        pro.setIngredients(ingPro)
                         controller.updateProduct(pro)
 
                     # DELETE
