@@ -278,3 +278,14 @@ class ControllerBar():
             print("Correct, product deleted!")
         else:
             print("Error!")
+
+    # INVOICE
+    def confirmOrder(self,id):
+        url = "http://localhost:8069/bar_app/confirmInvoice/"+id
+
+        response = requests.request("GET",url=url,)
+
+        if response.status_code == 200:
+            print("Correct, order confirmed!")
+        else:
+            print("Error!")

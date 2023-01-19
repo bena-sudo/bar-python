@@ -38,7 +38,6 @@ def listProducts():
         print("\t"+str(pro.getId()) + " " + pro.getName())
 
 def menuOptions():
-    print("0.- Finish day.")
     print("1.- Add order.")
     print("2.- Modify order.")
     print("3.- Finish order.")
@@ -68,17 +67,7 @@ while True:
     # SHOW MENU
     menuOptions()
     opc = int(input("Option: "))
-    if opc == 0:
-        # GET ALL ORDERS
-        orders = controller.getOrders()
-        # CALCULATE TOTAL PRICE OF THE DAY
-        total = 0 
-        for id,ord in orders.items():
-            total += ord.getTprice()
-        print("Total cash: ",total)
-        break
-
-    elif opc == 1:
+    if opc == 1:
         # SHOW CART
         listCard()
         # NUMBER TABLE
@@ -135,14 +124,8 @@ while True:
                     print("ERROR!")
         
     elif opc == 3:
-        # NUMBER TABLE
-        table = input("Table: ")
-        # GET ORDER
-        order = controller.findOrderByTable(table)
-        if (order == None):
-            print("Table is not exist.")
-        else:
-            order.getFinishOrder()
+        id = input("Order id:")
+        controller.confirmOrder(id)
 
     elif opc == 4:
         while True:

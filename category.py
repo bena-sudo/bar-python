@@ -1,5 +1,5 @@
 class Category:
-    def __init__(self,id,name,products,description):
+    def __init__(self,id,name,products,description,parent):
         if id == None:
             self.__id = 0
         else:
@@ -7,6 +7,7 @@ class Category:
         self.__name = name
         self.__products = products
         self.__description = description
+        self.__parent = parent
         
     def getId(self):
         return self.__id
@@ -19,6 +20,9 @@ class Category:
     
     def getDescription(self):
         return self.__description
+
+    def getParent(self):
+        return self.__parent
     
     def setId(self,id):
         self.__id = id

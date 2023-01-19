@@ -12,5 +12,26 @@ class Invoice:
         self.__tprice = tprice
         self.__state = state
 
-        def getReference(self):
-            return self.__id
+    def getReference(self):
+        return self.__reference
+
+    def getClient(self):
+        return self.__client
+
+    def getCreationdate(self):
+        return self.__creationdate
+
+    def getLines(self):
+        return self.__lines
+
+    def getBprice(self):
+        return self.__bprice
+
+    def getVat(self):
+        return self.__vat
+
+    def getTprice(self):
+        return self.__tprice
+    
+    def getState(self):
+        return self.__state
