@@ -5,7 +5,7 @@ from category import Category
 from product import Product
 controller = ControllerBar()
 
-def listCard():
+def menuCard():
     print("---- CARD ----")
     categorys = controller.getCategorys()
     for id,cate in categorys.items():
@@ -16,27 +16,6 @@ def listCard():
             print("\t",prod)
         print("----")
         
-def listIngredients():
-    controller.loadIngredients()
-    lIng = controller.getIngredients()
-    print("Ingredients list:")
-    for id,ing in lIng.items():
-        print("\t"+str(id) + " " + ing.getName())
-
-def listCategory():
-    controller.loadCategorys()
-    lCat = controller.getCategorys()
-    print("Category list:")
-    for id,cat in lCat.items():
-        print("\t"+str(id) + " " + cat.getName())
-
-def listProducts():
-    controller.loadProducts()
-    lPro = controller.getProducts()
-    print("Product list:")
-    for id,pro in lPro.items():
-        print("\t"+str(pro.getId()) + " " + pro.getName())
-
 def menuOptions():
     print("1.- Add order.")
     print("2.- Modify order.")
@@ -59,69 +38,52 @@ def menuCRUD(option):
     print("4.- List "+option+".")
     print("------------------")
 
-controller.loadCategorys()
-controller.loadProducts()
-controller.loadIngredients()
+def listIngredients():
+    controller.loadIngredients()
+    lIng = controller.getIngredients()
+    print("Ingredients list:")
+    for id,ing in lIng.items():
+        print("\t"+str(id) + " " + ing.getName())
+
+def listCategory():
+    controller.loadCategorys()
+    lCat = controller.getCategorys()
+    print("Category list:")
+    for id,cat in lCat.items():
+        print("\t"+str(id) + " " + cat.getName())
+
+def listProducts():
+    controller.loadProducts()
+    lPro = controller.getProducts()
+    print("Product list:")
+    for id,pro in lPro.items():
+        print("\t"+str(pro.getId()) + " " + pro.getName())
 
 while True:
     # SHOW MENU
     menuOptions()
     opc = int(input("Option: "))
     if opc == 1:
-        # SHOW CART
-        listCard()
-        # NUMBER TABLE
-        table = input("Table: ")
-        order = controller.findOrderByTable(table)
-        if order == None:
-            # NUMBER CLIENTS
-            numclients = int(input("Number of clients: "))
-            # NAME CLIENT
-            client = input("Name of the client: ")
-            # WAITER
-            waiter = input("Name of the waiter: ")
-            # PRODUCTS
-            products = []
-            while True:
-                # NAME
-                product = input("NameProduct (0 to end): ")
-                if product == "0":
-                        break
-                # CUANTITY
-                cuantity = int(input("Cuantity: "))
-                # ADD PRODUCTS
-                x = controller.getProduct(product)
-                if x != None:
-                    for j in range(0,cuantity):
-                        products.append(x)
-                else:
-                    print("ERROR!")
-            # ORDER
-            order = Order(table,numclients,client,waiter,products)
-            controller.addOrder(order)
-        else:
-            print("Table is exist.")
+        table = input("Table: ") # NUMBER TABLE
+        numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
+        client = input("Name of the client: ") # NAME CLIENT
+        waiter = input("Name of the waiter: ") # WAITER
+        products = [] # PRODUCTS
+        while True:
+            product = input("NameProduct (0 to end): ") # NAME
+            if product == "0":
+                break
+            cuantity = int(input("Cuantity: ")) # CUANTITY
+            x = controller.getProduct(product) # ADD PRODUCTS
+            if x != None:
+                for j in range(0,cuantity):
+                    products.append(x)
+            else:
+                print("ERROR!")
+            order = Order(order,table,product,False) # ORDER
         
     elif opc == 2:
-        # NUMBER TABLE
-        table = input("Table: ")
-        order = controller.findOrderByTable(table)
-        if order == None:
-            print("Table is not exist.")
-        else:
-            while True:
-                # NAME
-                product = input("NameProduct (0 to end): ")
-                if product == "0":
-                        break
-                cuantity = int(input("Cuantity: "))
-                # ADD PRODUCTS
-                x = controller.getProduct(product)
-                if x != None:
-                    for j in range(0,cuantity):
-                        products.append(x)
-                else:
-                    print("ERROR!")
+        print("")
         
     elif opc == 3:
         id = input("Order id:")
