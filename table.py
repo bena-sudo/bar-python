@@ -5,7 +5,10 @@ class Table:
         self.__numclients = numclients
         self.__client = client
         self.__waiter = waiter
-        self.__orders = orders
+        if orders == None:
+            self.__orders = None
+        else:
+            self.__orders = orders
         self.__description = description
 
     def getTable(self):

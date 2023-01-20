@@ -2,7 +2,10 @@ from datetime import datetime
 
 class Order:
     def __init__(self,order,table,lines,state):
-        self.__order = order
+        if id == None:
+            self.__order = 0
+        else:
+            self.__order = order
         self.__table = table
         self.__creationdate = datetime.now()
         self.__lines = lines

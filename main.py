@@ -7,12 +7,16 @@ from table import Table
 controller = ControllerBar()
 
 def menuCard():
+    controller.loadIngredients()
+    controller.loadCategorys()
+    controller.loadProducts()
+
     print("---- CARD ----")
     categorys = controller.getCategorys()
     for id,cate in categorys.items():
         print(cate.getName())
         print("----")
-        products = controller.listProducts(cate.getName())
+        products = controller.listProducts(cate.getId())
         for prod in products:
             print("\t",prod)
         print("----")
@@ -65,6 +69,7 @@ while True:
     menuOptions()
     opc = int(input("Option: "))
     if opc == 1:
+        menuCard()
         tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
@@ -82,9 +87,10 @@ while True:
                     products.append(x)
             else:
                 print("ERROR!")
-                
-            table = Table(tableName,numclients,client,waiter,description) # TABLE
-            order = Order(order,table,product,False) # ORDER
+
+            table = Table(tableName,numclients,client,waiter,None,description) # TABLE
+            order = Order(None,table,product,False) # ORDER
+            controller.addOrder(order)
         
     elif opc == 2:
         print("")

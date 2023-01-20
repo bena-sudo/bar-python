@@ -13,6 +13,16 @@ class ControllerBar():
         self.__con = 0
 
     # LOAD 
+    def loadIngredients(self):
+        self.__ingredients = {}
+        url = "http://localhost:8069/bar_app/getAllIngredients"
+        response = requests.request("GET", url)
+        data = response.json()
+        
+        categorys = data["data"]
+        for x in categorys:
+            self.__ingredients[x["id"]] = Ingredient(x["id"],x["name"],x["products"],x["description"])
+    
     def loadCategorys(self):
         self.__categorys = {}
         url = "http://localhost:8069/bar_app/getAllCategorys"
@@ -21,7 +31,7 @@ class ControllerBar():
 
         categorys = data["data"]
         for x in categorys:
-            self.__categorys[x["id"]] = Category(x["id"],x["name"],x["product"],x["description"])
+            self.__categorys[x["id"]] = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"])
 
     def loadProducts(self):
         self.__products = {}
@@ -39,26 +49,6 @@ class ControllerBar():
             description = x["description"]
             self.__products[name] = Product(id,name,price,category,ingredients,description)
 
-    def loadIngredients(self):
-        self.__ingredients = {}
-        url = "http://localhost:8069/bar_app/getAllIngredients"
-        response = requests.request("GET", url)
-        data = response.json()
-        
-        categorys = data["data"]
-        for x in categorys:
-            self.__ingredients[x["id"]] = Ingredient(x["id"],x["name"],x["products"],x["description"])
-    
-    def loadIngredients(self):
-        self.__ingredients = {}
-        url = "http://localhost:8069/bar_app/getAllIngredients"
-        response = requests.request("GET", url)
-        data = response.json()
-        
-        categorys = data["data"]
-        for x in categorys:
-            self.__ingredients[x["id"]] = Ingredient(x["id"],x["name"],x["products"],x["description"])
-
     # GET
     def getProducts(self):
         return self.__products
@@ -74,8 +64,9 @@ class ControllerBar():
         products = []
         for name,prod in self.__products.items():
             cate = prod.getCategory()
-            if cate[1] == category:
-                products.append(prod.getName())
+            for x in cate:
+                if x == category:
+                    products.append(prod.getName())
         return products
 
     def getProduct(self,nameProduct):
@@ -167,6 +158,23 @@ class ControllerBar():
             "category":product.getCategory(),
             "ingredients":product.getIngredients(),
             "description":product.getDescription()
+        }
+        response = requests.request("POST",url=url,json=querystring)
+
+        if response.status_code == 200:
+            print("Correct, product created!")
+        else:
+            print(response.status_code)
+            print("Error!")
+
+    def createOrder(self,order):
+        url = "http://localhost:8069/bar_app/addOrder"
+
+        lines = [24]
+
+        querystring = {
+            "table":order.getTable(),
+            "lines":lines
         }
         response = requests.request("POST",url=url,json=querystring)
 
