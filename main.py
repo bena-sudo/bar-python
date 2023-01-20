@@ -3,6 +3,7 @@ from order import Order
 from ingredient import Ingredient
 from category import Category
 from product import Product
+from table import Table
 controller = ControllerBar()
 
 def menuCard():
@@ -64,10 +65,11 @@ while True:
     menuOptions()
     opc = int(input("Option: "))
     if opc == 1:
-        table = input("Table: ") # NUMBER TABLE
+        tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
         waiter = input("Name of the waiter: ") # WAITER
+        description = input("Description of the table: ") # DESCRIPTION
         products = [] # PRODUCTS
         while True:
             product = input("NameProduct (0 to end): ") # NAME
@@ -80,6 +82,8 @@ while True:
                     products.append(x)
             else:
                 print("ERROR!")
+                
+            table = Table(tableName,numclients,client,waiter,description) # TABLE
             order = Order(order,table,product,False) # ORDER
         
     elif opc == 2:

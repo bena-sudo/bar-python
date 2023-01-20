@@ -91,22 +91,6 @@ class ControllerBar():
     def getOrders(self):
         return self.__orders
 
-
-    # BUSCAR
-    def getOrderByTable(self,table):
-        for name,ord in self.__orders.items():
-            if (ord.getTable()==table):
-                if (ord.getFinish()==True):
-                    return ord
-        return None
-
-    def findOrderByTable(self,table):
-        for name,ord in self.__orders.items():
-            if (ord.getTable()==table):    
-                if (ord.getFinish()==False):
-                    return ord
-        return None
-
     # FIND
     def findIngredientById(self,idd):
         self.__ingredients = {}
@@ -117,7 +101,6 @@ class ControllerBar():
         for x in data:
             ingredient = Ingredient(x["id"],x["name"],x["products"],x["description"])
             return ingredient
-        
 
     def findCategoryById(self,id):
         self.__categorys = {}
@@ -147,8 +130,8 @@ class ControllerBar():
 
         querystring = {
             "name":ingredient.getName(),
-            "description":ingredient.getDescription(),
-            "products":ingredient.getProducts()
+            "products":ingredient.getProducts(),
+            "description":ingredient.getDescription()
         }
         response = requests.request("POST",url=url,json=querystring)
 
@@ -164,7 +147,8 @@ class ControllerBar():
         querystring = {
             "name":category.getName(),
             "description":category.getDescription(),
-            "product":category.getProducts()
+            "product":category.getProducts(),
+            "parent_id":category.getParent()
         }
         response = requests.request("POST",url=url,json=querystring)
 
@@ -216,7 +200,8 @@ class ControllerBar():
             "id":category.getId(),
             "name":category.getName(),
             "description":category.getDescription(),
-            "product":category.getProducts()
+            "product":category.getProducts(),
+            "parent_id":category.getParent()
         }
         response = requests.request("PUT",url=url,json=querystring)
 
