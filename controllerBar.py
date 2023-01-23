@@ -100,7 +100,7 @@ class ControllerBar():
         datajson = response.json()
         data = datajson["data"] 
         for x in data:
-            cat = Category(x["id"],x["name"],x["product"],x["description"]) 
+            cat = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"]) 
             return cat
         return None
 
@@ -194,7 +194,7 @@ class ControllerBar():
             "description":ingredient.getDescription(),
             "products":ingredient.getProducts()
         }
-        response = requests.request("PUT",url=url,json=querystring)
+        response = requests.put(url=url,json=querystring)
 
         if response.status_code == 200:
             print("Correct, category update!")

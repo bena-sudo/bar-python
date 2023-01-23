@@ -7,8 +7,11 @@ class Category:
         self.__name = name
         self.__products = products
         self.__description = description
-        self.__parent = parent
-        
+        if id == None:
+            self.__parent = None
+        else:
+            self.__parent = parent
+          
     def getId(self):
         return self.__id
 
