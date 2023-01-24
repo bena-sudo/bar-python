@@ -211,7 +211,7 @@ class ControllerBar():
             "product":category.getProducts(),
             "parent_id":category.getParent()
         }
-        response = requests.request("PUT",url=url,json=querystring)
+        response = requests.put(url=url,json=querystring)
 
         if response.status_code == 200:
             print("Correct, category update!")
@@ -222,13 +222,14 @@ class ControllerBar():
         url = "http://localhost:8069/bar_app/updateProduct"
 
         querystring = {
+            "id":product.getId(),
             "name":product.getName(),
             "price":product.getPrice(),
             "category":product.getCategory(),
             "ingredients":product.getIngredients(),
             "description":product.getDescription()
         }
-        response = requests.request("PUT",url=url,json=querystring)
+        response = requests.put(url=url,json=querystring)
 
         if response.status_code == 200:
             print("Correct, product update!")

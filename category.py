@@ -38,3 +38,6 @@ class Category:
 
     def setDescription(self,description):
         self.__description = description
+
+    def setParent(self,parent):
+        self.__parent = parent
