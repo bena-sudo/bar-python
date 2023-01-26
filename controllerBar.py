@@ -75,10 +75,6 @@ class ControllerBar():
                 return prod
         return None
 
-    def addOrder(self,order):
-        self.__con += 1
-        self.__orders[self.__con] = order
-
     def getOrders(self):
         return self.__orders
 
@@ -139,7 +135,7 @@ class ControllerBar():
             "name":category.getName(),
             "description":category.getDescription(),
             "product":category.getProducts(),
-            "parent_id":category.getParent()
+            "parent_id":1
         }
         response = requests.request("POST",url=url,json=querystring)
 
@@ -170,11 +166,8 @@ class ControllerBar():
     def createOrder(self,order):
         url = "http://localhost:8069/bar_app/addOrder"
 
-        lines = [24]
-
         querystring = {
-            "table":order.getTable(),
-            "lines":lines
+            "tprice":20
         }
         response = requests.request("POST",url=url,json=querystring)
 
@@ -210,6 +203,7 @@ class ControllerBar():
             "description":category.getDescription(),
             "product":category.getProducts(),
             "parent_id":category.getParent()
+            
         }
         response = requests.put(url=url,json=querystring)
 

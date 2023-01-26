@@ -6,6 +6,7 @@ from product import Product
 from table import Table
 controller = ControllerBar()
 
+
 def menuCard():
     controller.loadIngredients()
     controller.loadCategorys()
@@ -95,8 +96,8 @@ while True:
                 print("ERROR!")
 
             table = Table(tableName,numclients,client,waiter,None,description) # TABLE
-            order = Order(None,table,product,False) # ORDER
-            controller.addOrder(order)
+            order = Order(None,1,None,False) # ORDER
+            controller.createOrder(order)
         
     elif opc == 2:
         print("")
@@ -184,8 +185,7 @@ while True:
                         nameCat = input("Category name: ") # NAME
                         descCat = input("Category description: ") # DESCRIPTION
                         listCategory()
-                        parCat = [2,"Carnes"]
-
+                        parCat = int(input("Category parent: ")) # PARENT
                         listProducts()
                         prodCat = []
                         while(True):
@@ -193,8 +193,6 @@ while True:
                             if opcCat == 0:
                                 break
                             prodCat.append(opcCat)
-
-                        
 
                         category = Category(None,nameCat,prodCat,descCat,parCat)
                         controller.createCategory(category)
@@ -227,8 +225,8 @@ while True:
                         cat.setProducts(prodCat)
 
                         listCategory()
-                        parCat = input("Category id: ") # CATEGORY
-                        if parCat == "":
+                        parCat = int(input("Category id: ")) # CATEGORY
+                        if parCat == None:
                             cat.setParent(False)
                         cat.setParent(parCat)
                         
