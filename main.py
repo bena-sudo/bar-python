@@ -29,6 +29,7 @@ def menuCard():
                             print("\t\t",prod)
         
 def menuOptions():
+    print("0.- FINISH")
     print("1.- Add order.")
     print("2.- Modify order.")
     print("3.- Finish order.")
@@ -75,7 +76,10 @@ while True:
     # SHOW MENU
     menuOptions()
     opc = int(input("Option: "))
-    if opc == 1:
+    if opc == 0:
+        print("ADEU")
+        break
+    elif opc == 1:
         menuCard()
         tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
@@ -193,7 +197,8 @@ while True:
                             if opcCat == 0:
                                 break
                             prodCat.append(opcCat)
-
+                        if parCat == 0:
+                            parCat = False
                         category = Category(None,nameCat,prodCat,descCat,parCat)
                         controller.createCategory(category)
                     # MODIFY
@@ -225,9 +230,9 @@ while True:
                         cat.setProducts(prodCat)
 
                         listCategory()
-                        parCat = int(input("Category id: ")) # CATEGORY
-                        if parCat == None:
-                            cat.setParent(False)
+                        parCat = int(input("Category id (0 to none): ")) # CATEGORY
+                        if parCat == 0:
+                            parCat = False
                         cat.setParent(parCat)
                         
                         controller.updateCategory(cat)

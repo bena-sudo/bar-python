@@ -28,10 +28,12 @@ class ControllerBar():
         url = "http://localhost:8069/bar_app/getAllCategorys"
         response = requests.request("GET", url)
         data = response.json()
-
         categorys = data["data"]
         for x in categorys:
-            self.__categorys[x["id"]] = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"])
+            if x["parent_id"] == False:
+                self.__categorys[x["id"]] = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"])
+            else:
+                self.__categorys[x["id"]] = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"][0])
 
     def loadProducts(self):
         self.__products = {}
@@ -94,9 +96,12 @@ class ControllerBar():
         url = "http://localhost:8069/bar_app/getCategory/"+str(id)
         response = requests.request("GET", url)
         datajson = response.json()
-        data = datajson["data"] 
+        data = datajson["data"]
         for x in data:
-            cat = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"]) 
+            if x["parent_id"] == False:
+                cat = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"])
+            else:
+                cat = Category(x["id"],x["name"],x["product"],x["description"],x["parent_id"][0])
             return cat
         return None
 
@@ -135,7 +140,7 @@ class ControllerBar():
             "name":category.getName(),
             "description":category.getDescription(),
             "product":category.getProducts(),
-            "parent_id":1
+            "parent_id":category.getParent()
         }
         response = requests.request("POST",url=url,json=querystring)
 
