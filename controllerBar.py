@@ -145,7 +145,7 @@ class ControllerBar():
         response = requests.request("POST",url=url,json=querystring)
 
         if response.status_code == 200:
-            print("Correct, ingredient created!")
+            print("Correct, category created!")
         else:
             print(response.status_code)
             print("Error!")
@@ -177,7 +177,7 @@ class ControllerBar():
         response = requests.request("POST",url=url,json=querystring)
 
         if response.status_code == 200:
-            print("Correct, product created!")
+            print("Correct, order created!")
         else:
             print(response.status_code)
             print("Error!")
@@ -195,7 +195,7 @@ class ControllerBar():
         response = requests.put(url=url,json=querystring)
 
         if response.status_code == 200:
-            print("Correct, category update!")
+            print("Correct, ingredient update!")
         else:
             print("Error!")
 
