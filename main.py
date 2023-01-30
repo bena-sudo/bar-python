@@ -4,6 +4,7 @@ from ingredient import Ingredient
 from category import Category
 from product import Product
 from table import Table
+from lineOrder import LineOrder
 controller = ControllerBar()
 
 
@@ -21,7 +22,7 @@ def menuCard():
             for id,cate2 in categorys.items():
                 x = cate2.getParent()
                 if x != False:
-                    if x[1] == cate.getName():
+                    if x == cate.getId():
                         print("\t",cate2.getName())
                         print("\t----")
                         products = controller.listProducts(cate2.getId())
@@ -98,33 +99,32 @@ while True:
         print("ADEU")
         break
     elif opc == 1:
-        #menuCard()
+        menuCard()
         tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
         waiter = input("Name of the waiter: ") # WAITER
         description = input("Description of the table: ") # DESCRIPTION
-        products = [] # PRODUCTS
         
-        """
+        table = Table(None,tableName,numclients,client,waiter,None,description) # TABLE
+        controller.createTable(table)
+        order = Order(None,None,table.getId(),None,False) # ORDER
+        controller.createOrder(order)
+
         while True:
             product = input("NameProduct (0 to end): ") # NAME
             if product == "0":
                 break
-            cuantity = int(input("Cuantity: ")) # CUANTITY
-            x = controller.getProduct(product) # ADD PRODUCTS
+            
+            x = controller.getProduct(product) # FINDE PRODUCTS
             if x != None:
-                for j in range(0,cuantity):
-                    products.append(x)
+                cuantity = int(input("Cuantity: ")) # CUANTITY
+                description = input("Observation of the product: ") # DESCRIPTION
+                line = LineOrder(None,order.getId(),cuantity,x.getId(),description)
+                controller.createLine(line)
             else:
                 print("ERROR!")
-        """
 
-        table = Table(None,tableName,numclients,client,waiter,None,description) # TABLE
-        controller.createTable(table)
-        order = Order(None,table.getId(),None,False) # ORDER
-        controller.createOrder(order)
-        
     elif opc == 2:
         print("")
         

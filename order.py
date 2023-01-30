@@ -1,8 +1,12 @@
 from datetime import datetime
 
 class Order:
-    def __init__(self,order,table,lines,state):
+    def __init__(self,id,order,table,lines,state):
         if id == None:
+            self.__id = 0
+        else:
+            self.__id = id
+        if order == None:
             self.__order = 0
         else:
             self.__order = order
@@ -12,6 +16,9 @@ class Order:
         self.__tprice = 0
         self.__state = state
 
+    def getId(self):
+        return self.__id
+    
     def getOrder(self):
         return self.__order
     
@@ -29,3 +36,6 @@ class Order:
 
     def getState(self):
         return self.__state
+
+    def setId(self,id):
+        self.__id = id

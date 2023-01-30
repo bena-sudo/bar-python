@@ -175,7 +175,11 @@ class ControllerBar():
         }
         response = requests.request("POST",url=url,json=querystring)
 
-        if response.status_code != 200:
+        if response.status_code == 200:
+            datajson = response.json()
+            data = datajson["result"]
+            order.setId(data["id"])
+        else:
             print(response.status_code)
             print("Error!")
 
@@ -196,6 +200,21 @@ class ControllerBar():
             data = datajson["result"]
             table.setId(data["id"])
         else:
+            print(response.status_code)
+            print("Error!")
+
+    def createLine(self,line):
+        url = "http://localhost:8069/bar_app/addLine"
+
+        querystring = {
+            "order":line.getOrder(),
+            "cuantity":line.getCuantitity(),
+            "product":line.getProduct(),
+            "description":line.getDescription()
+        }
+        response = requests.request("POST",url=url,json=querystring)
+
+        if response.status_code != 200:
             print(response.status_code)
             print("Error!")
 
