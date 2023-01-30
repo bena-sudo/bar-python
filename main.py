@@ -27,7 +27,25 @@ def menuCard():
                         products = controller.listProducts(cate2.getId())
                         for prod in products:
                             print("\t\t",prod)
+"""
+def menuCardrecursive():
+    controller.loadIngredients()
+    controller.loadCategorys()
+    controller.loadProducts()
+
+    categorys = controller.getCategorys
+    products = controller.getProducts
+    for id,cate in categorys.items():
+        if cate.getParent() == False:
+            pass
         
+def printCategory(categorys,products,cat):
+    for id,cate in categorys.items():
+        x = cate.getParent()
+        if x != False:
+            if x[1] == cate.getName():
+                printCategory()"""
+
 def menuOptions():
     print("0.- FINISH")
     print("1.- Add order.")
@@ -172,7 +190,11 @@ while True:
                         controller.deleteIngredient(id)
                     # LIST
                     elif opc == 4:
-                        listIngredients()
+                        controller.loadIngredients()
+                        lIng = controller.getIngredients()
+                        print("Ingredients list:")
+                        for id,ing in lIng.items():
+                            print("\t"+ing.toString())
                     # DEFAULT
                     else:
                         print("Option incorrect!")
@@ -242,7 +264,11 @@ while True:
                         controller.deleteCategory(id)
                     # LIST
                     elif opc == 4:
-                        listCategory()
+                        controller.loadCategorys()
+                        lCat = controller.getCategorys()
+                        print("Category list:")
+                        for id,cat in lCat.items():
+                            print("\t"+cat.toString())
                     # DEFAULT
                     else:
                         print("Option incorrect!")
@@ -327,7 +353,11 @@ while True:
                         controller.deleteProduct(id)
                     # LIST
                     elif opc == 4:
-                        listProducts()
+                        controller.loadProducts()
+                        lPro = controller.getProducts()
+                        print("Product list:")
+                        for id,pro in lPro.items():
+                            print("\t"+pro.toString())
                     # DEFAULT
                     else:
                         print("Option incorrect!")

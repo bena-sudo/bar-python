@@ -31,3 +31,7 @@ class Ingredient:
 
     def setDescription(self,description):
         self.__description = description
+
+    def toString(self):
+        res = str(self.__id)+ " " + self.__name + " " + str(self.__products) + " " + self.__description
+        return res

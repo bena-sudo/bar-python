@@ -41,3 +41,7 @@ class Category:
 
     def setParent(self,parent):
         self.__parent = parent
+
+    def toString(self):
+        res = str(self.__id)+ " " + self.__name + " " + str(self.__products) + " " + self.__description + " " + str(self.__parent)
+        return res

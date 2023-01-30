@@ -45,3 +45,7 @@ class Product:
 
     def setDescription(self,description):
         self.__description = description
+
+    def toString(self):
+        res = str(self.__id) + " " + self.__name + " " + str(self.__price) + " " + str(self.__category) + " " + str(self.__category) + " " + self.__description
+        return res

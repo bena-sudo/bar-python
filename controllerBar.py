@@ -10,7 +10,19 @@ class ControllerBar():
         self.__products = {}
         self.__orders = {}
         self.__ingredients = {}
-        self.__con = 0
+
+    # GET
+    def getProducts(self):
+        return self.__products
+
+    def getCategorys(self):
+        return self.__categorys
+
+    def getIngredients(self):
+        return self.__ingredients
+
+    def getOrders(self):
+        return self.__orders
 
     # LOAD 
     def loadIngredients(self):
@@ -51,16 +63,6 @@ class ControllerBar():
             description = x["description"]
             self.__products[name] = Product(id,name,price,category,ingredients,description)
 
-    # GET
-    def getProducts(self):
-        return self.__products
-
-    def getCategorys(self):
-        return self.__categorys
-
-    def getIngredients(self):
-        return self.__ingredients
-
     # OTROS
     def listProducts(self,category):
         products = []
@@ -76,9 +78,6 @@ class ControllerBar():
             if (prod.getName()==nameProduct):
                 return prod
         return None
-
-    def getOrders(self):
-        return self.__orders
 
     # FIND
     def findIngredientById(self,idd):
