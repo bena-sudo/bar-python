@@ -171,12 +171,30 @@ class ControllerBar():
         url = "http://localhost:8069/bar_app/addOrder"
 
         querystring = {
-            "tprice":20
+            "table":order.getTable()
+        }
+        response = requests.request("POST",url=url,json=querystring)
+
+        if response.status_code != 200:
+            print(response.status_code)
+            print("Error!")
+
+    def createTable(self,table):
+        url = "http://localhost:8069/bar_app/addTable"
+
+        querystring = {
+            "table":table.getTable(),
+            "numclients":table.getNumberclients(),
+            "client":table.getClient(),
+            "waiter":table.getWaiter(),
+            "description":table.getDescription()
         }
         response = requests.request("POST",url=url,json=querystring)
 
         if response.status_code == 200:
-            print("Correct, order created!")
+            datajson = response.json()
+            data = datajson["result"]
+            table.setId(data["id"])
         else:
             print(response.status_code)
             print("Error!")

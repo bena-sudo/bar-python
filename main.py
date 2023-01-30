@@ -98,13 +98,15 @@ while True:
         print("ADEU")
         break
     elif opc == 1:
-        menuCard()
+        #menuCard()
         tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
         waiter = input("Name of the waiter: ") # WAITER
         description = input("Description of the table: ") # DESCRIPTION
         products = [] # PRODUCTS
+        
+        """
         while True:
             product = input("NameProduct (0 to end): ") # NAME
             if product == "0":
@@ -116,10 +118,12 @@ while True:
                     products.append(x)
             else:
                 print("ERROR!")
+        """
 
-            table = Table(tableName,numclients,client,waiter,None,description) # TABLE
-            order = Order(None,1,None,False) # ORDER
-            controller.createOrder(order)
+        table = Table(None,tableName,numclients,client,waiter,None,description) # TABLE
+        controller.createTable(table)
+        order = Order(None,table.getId(),None,False) # ORDER
+        controller.createOrder(order)
         
     elif opc == 2:
         print("")
