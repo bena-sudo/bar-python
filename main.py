@@ -7,7 +7,7 @@ from table import Table
 from lineOrder import LineOrder
 controller = ControllerBar()
 
-
+"""
 def menuCard():
     controller.loadIngredients()
     controller.loadCategorys()
@@ -27,25 +27,42 @@ def menuCard():
                         print("\t----")
                         products = controller.listProducts(cate2.getId())
                         for prod in products:
-                            print("\t\t",prod)
-"""
-def menuCardrecursive():
+                            print("\t\t",prod)"""
+
+def card():
     controller.loadIngredients()
     controller.loadCategorys()
     controller.loadProducts()
+    categorys = controller.getCategorys()
+    products = controller.getProducts()
 
-    categorys = controller.getCategorys
-    products = controller.getProducts
     for id,cate in categorys.items():
         if cate.getParent() == False:
-            pass
+            print("-"+cate.getName())
+            viewCategorys(cate,1,products,categorys)
+            viewProducts(cate,products,1)
+
+def viewCategorys(cate,i,products,categorys):
+    for id,cat in categorys.items():
+        l = cat.getParent()
+        if l != False:
+            if l == cate.getId():
+                print(space(i)+"-"+cat.getName())
+                viewCategorys(cat,i+1,products,categorys)
+                viewProducts(cat,products,i+1)
         
-def printCategory(categorys,products,cat):
-    for id,cate in categorys.items():
-        x = cate.getParent()
-        if x != False:
-            if x[1] == cate.getName():
-                printCategory()"""
+def viewProducts(cat,products,i):
+    for id,pro in products.items():
+            h = pro.getCategory()
+            for x in h:
+                if x == cat.getId():
+                    print(space(i)+pro.getName())
+
+def space(i):
+    s = ""
+    for x in range(0,i):
+        s += "\t"
+    return s
 
 def menuOptions():
     print("0.- FINISH")
@@ -96,10 +113,10 @@ while True:
     menuOptions()
     opc = int(input("Option: "))
     if opc == 0:
-        print("ADEU")
+        print("FIN")
         break
     elif opc == 1:
-        menuCard()
+        card()
         tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
