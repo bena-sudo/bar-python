@@ -7,29 +7,7 @@ from table import Table
 from lineOrder import LineOrder
 controller = ControllerBar()
 
-"""
-def menuCard():
-    controller.loadIngredients()
-    controller.loadCategorys()
-    controller.loadProducts()
-
-    print("---- CARD ----")
-    categorys = controller.getCategorys()
-    for id,cate in categorys.items():
-        if cate.getParent() == False:
-            print(cate.getName())
-            print("----")
-            for id,cate2 in categorys.items():
-                x = cate2.getParent()
-                if x != False:
-                    if x == cate.getId():
-                        print("\t",cate2.getName())
-                        print("\t----")
-                        products = controller.listProducts(cate2.getId())
-                        for prod in products:
-                            print("\t\t",prod)"""
-
-def card():
+def card(): # SHOW MENU CARD
     controller.loadIngredients()
     controller.loadCategorys()
     controller.loadProducts()
@@ -143,7 +121,11 @@ while True:
                 print("ERROR!")
 
     elif opc == 2:
-        print("")
+        controller.loadOrder()
+        orders = controller.getOrders()
+        for id,ord in orders.items():
+            if ord.getState() == "D":
+                print(ord.getId()+" "+ord.getOrder())
         
     elif opc == 3:
         id = input("Order id:")

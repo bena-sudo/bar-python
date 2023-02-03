@@ -1,25 +1,27 @@
 from product import Product
 from category import Category
 from ingredient import Ingredient
+from order import Order
+from lineOrder import LineOrder
 import requests
 import json
 
 class ControllerBar():
     def __init__(self):
+        self.__ingredients = {}
         self.__categorys = {}
         self.__products = {}
         self.__orders = {}
-        self.__ingredients = {}
 
     # GET
-    def getProducts(self):
-        return self.__products
+    def getIngredients(self):
+        return self.__ingredients
 
     def getCategorys(self):
         return self.__categorys
 
-    def getIngredients(self):
-        return self.__ingredients
+    def getProducts(self):
+        return self.__products
 
     def getOrders(self):
         return self.__orders
@@ -63,6 +65,21 @@ class ControllerBar():
             description = x["description"]
             self.__products[name] = Product(id,name,price,category,ingredients,description)
 
+    def loadOrder(self):
+        self.__orders = {}
+        url = "http://localhost:8069/bar_app/getAllOrders"
+        response = requests.request("GET", url)
+        data = response.json()
+
+        orders = data["data"]
+        l = []
+        for x in orders:
+            line = x["lines"]
+            for x in line:
+                r = self.findLineById(x)
+                l.append(r)
+            self.__orders[x["id"]] = Order(x["id"],x["order"],x["table"],l,x["state"]) 
+
     # OTROS
     def listProducts(self,category):
         products = []
@@ -73,15 +90,8 @@ class ControllerBar():
                     products.append(prod.getName())
         return products
 
-    def getProduct(self,nameProduct):
-        for name,prod in self.__products.items():
-            if (prod.getName()==nameProduct):
-                return prod
-        return None
-
     # FIND
     def findIngredientById(self,idd):
-        self.__ingredients = {}
         url = "http://localhost:8069/bar_app/getIngredient/"+str(idd)
         response = requests.request("GET", url)
         jsondata = response.json()
@@ -91,7 +101,6 @@ class ControllerBar():
             return ingredient
 
     def findCategoryById(self,id):
-        self.__categorys = {}
         url = "http://localhost:8069/bar_app/getCategory/"+str(id)
         response = requests.request("GET", url)
         datajson = response.json()
@@ -105,7 +114,6 @@ class ControllerBar():
         return None
 
     def findProductById(self,id):
-        self.__products = {}
         url = "http://localhost:8069/bar_app/getProduct/"+str(id)
         response = requests.request("GET", url)
         datajson = response.json()
@@ -114,7 +122,16 @@ class ControllerBar():
             pro = Product(x["id"],x["name"],x["price"],x["category"],x["ingredients"],x["description"])
             return pro
         return None
-        
+
+    def findLineById(self,idd):
+        url = "http://localhost:8069/bar_app/getLine/"+str(idd)
+        response = requests.request("GET", url)
+        jsondata = response.json()
+        data = jsondata["data"]
+        for x in data:
+            line = LineOrder(x["id"],x["order"],x["cuantity"],x["product"],x["description"])
+            return line
+
     # CREATE
     def createIngredient(self,ingredient):
         url = "http://localhost:8069/bar_app/addIngredient"
