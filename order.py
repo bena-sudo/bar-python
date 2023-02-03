@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Order:
-    def __init__(self,id,order,table,lines,state):
+    def __init__(self,id,order,table,numclients,client,waiter,lines,state):
         if id == None:
             self.__id = 0
         else:
@@ -11,6 +11,9 @@ class Order:
         else:
             self.__order = order
         self.__table = table
+        self.__numclients = numclients
+        self.__client = client
+        self.__waiter = waiter
         self.__creationdate = datetime.now()
         self.__lines = lines
         self.__tprice = 0
@@ -36,6 +39,15 @@ class Order:
 
     def getState(self):
         return self.__state
+
+    def getClient(self):
+        return self.__client
+
+    def getNumberclients(self):
+        return self.__numclients
+
+    def getWaiter(self):
+        return self.__waiter
 
     def setId(self,id):
         self.__id = id

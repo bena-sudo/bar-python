@@ -1,5 +1,5 @@
 class LineOrder:
-    def __init__(self,id,order,cuantity,product,description):
+    def __init__(self,id,order,cuantity,product,description,finish):
         if id == None:
             self.__id = 0
         else:
@@ -7,6 +7,7 @@ class LineOrder:
         self.__order = order
         self.__cuantity = cuantity
         self.__product = product
+        self.__finish = finish
         self.__description = description
 
     def getId(self):
@@ -23,3 +24,6 @@ class LineOrder:
 
     def getDescription(self):
         return self.__description
+
+    def getFinish(self):
+        return self.__finish
