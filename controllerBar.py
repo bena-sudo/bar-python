@@ -13,7 +13,6 @@ class ControllerBar():
         self.__products = {}
         self.__orders = {}
 
-    # GET
     def getIngredients(self):
         return self.__ingredients
 
@@ -78,7 +77,7 @@ class ControllerBar():
             for x in line:
                 r = self.findLineById(x)
                 l.append(r)
-            self.__orders[x["id"]] = Order(x["id"],x["order"],x["table"],l,x["state"]) 
+            self.__orders[x["id"]] = Order(x["id"],x["order"],x["table"][0],x["numclients"],x["client"],x["waiter"],l,x["state"]) 
 
     # OTROS
     def listProducts(self,category):
@@ -89,6 +88,12 @@ class ControllerBar():
                 if x == category:
                     products.append(prod.getName())
         return products
+    
+    def getProduct(self,nameProduct):
+        for name,prod in self.__products.items():
+            if (prod.getName()==nameProduct):
+                return prod
+        return None
 
     # FIND
     def findIngredientById(self,idd):
@@ -129,7 +134,7 @@ class ControllerBar():
         jsondata = response.json()
         data = jsondata["data"]
         for x in data:
-            line = LineOrder(x["id"],x["order"],x["cuantity"],x["product"],x["description"])
+            line = LineOrder(x["id"],x["order"],x["cuantity"],x["product"],x["description"],x["finish"])
             return line
 
     # CREATE
@@ -188,7 +193,9 @@ class ControllerBar():
         url = "http://localhost:8069/bar_app/addOrder"
 
         querystring = {
-            "table":order.getTable()
+            "table":order.getTable(),
+            "numclients":order.getNumberclients(),
+            "client":order.getClient()
         }
         response = requests.request("POST",url=url,json=querystring)
 
@@ -205,9 +212,6 @@ class ControllerBar():
 
         querystring = {
             "table":table.getTable(),
-            "numclients":table.getNumberclients(),
-            "client":table.getClient(),
-            "waiter":table.getWaiter(),
             "description":table.getDescription()
         }
         response = requests.request("POST",url=url,json=querystring)

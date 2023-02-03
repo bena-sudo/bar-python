@@ -7,6 +7,29 @@ from table import Table
 from lineOrder import LineOrder
 controller = ControllerBar()
 
+def menuOptions():
+    print("0.- FINISH")
+    print("1.- Add order.")
+    print("2.- Modify order.")
+    print("3.- Finish order.")
+    print("4.- Options administration.")
+    print("------------------")
+
+def menuAdministration():
+    print("0.- Exit.")
+    print("1.- Menu ingredient.")
+    print("2.- Menu category.")
+    print("3.- Menu product.")
+    print("------------------")
+
+def menuCRUD(option):
+    print("0.- Exit.")
+    print("1.- Add "+option+".")
+    print("2.- Modify "+option+".")
+    print("3.- Delete "+option+".")
+    print("4.- List "+option+".")
+    print("------------------")
+
 def card(): # SHOW MENU CARD
     controller.loadIngredients()
     controller.loadCategorys()
@@ -42,29 +65,6 @@ def space(i):
         s += "\t"
     return s
 
-def menuOptions():
-    print("0.- FINISH")
-    print("1.- Add order.")
-    print("2.- Modify order.")
-    print("3.- Finish order.")
-    print("4.- Options administration.")
-    print("------------------")
-
-def menuAdministration():
-    print("0.- Exit.")
-    print("1.- Menu ingredient.")
-    print("2.- Menu category.")
-    print("3.- Menu product.")
-    print("------------------")
-
-def menuCRUD(option):
-    print("0.- Exit.")
-    print("1.- Add "+option+".")
-    print("2.- Modify "+option+".")
-    print("3.- Delete "+option+".")
-    print("4.- List "+option+".")
-    print("------------------")
-
 def listIngredients():
     controller.loadIngredients()
     lIng = controller.getIngredients()
@@ -98,12 +98,11 @@ while True:
         tableName = input("Table: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
-        waiter = input("Name of the waiter: ") # WAITER
         description = input("Description of the table: ") # DESCRIPTION
         
-        table = Table(None,tableName,numclients,client,waiter,None,description) # TABLE
+        table = Table(None,tableName,None,description) # TABLE
         controller.createTable(table)
-        order = Order(None,None,table.getId(),None,False) # ORDER
+        order = Order(None,None,table.getId(),numclients,client,None,None,False) # ORDER
         controller.createOrder(order)
 
         while True:
@@ -115,7 +114,7 @@ while True:
             if x != None:
                 cuantity = int(input("Cuantity: ")) # CUANTITY
                 description = input("Observation of the product: ") # DESCRIPTION
-                line = LineOrder(None,order.getId(),cuantity,x.getId(),description)
+                line = LineOrder(None,order.getId(),cuantity,x.getId(),description,None)
                 controller.createLine(line)
             else:
                 print("ERROR!")
@@ -128,7 +127,7 @@ while True:
                 print(ord.getId()+" "+ord.getOrder())
         
     elif opc == 3:
-        id = input("Order id:")
+        id = input("Order id: ")
         controller.confirmOrder(id)
 
     elif opc == 4:
@@ -228,6 +227,7 @@ while True:
                         controller.createCategory(category)
                     # MODIFY
                     elif opc == 2:
+                        listCategory()
                         idCat = int(input("Category id: "))
                         cat = controller.findCategoryById(idCat)
                         if cat == None:
