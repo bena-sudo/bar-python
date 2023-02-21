@@ -40,5 +40,5 @@ class Category:
         self.__parent = parent
 
     def toString(self):
-        res = str(self.__id)+ " " + self.__name + " " + str(self.__products) + " " + self.__description + " " + str(self.__parent)
+        res = str(self.__id)+ " / Name: " + self.__name + " / Products: " + str(self.__products) + " / Category parent: " + str(self.__parent) + " / Description: " + str(self.__description)
         return res

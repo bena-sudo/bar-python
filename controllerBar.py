@@ -71,13 +71,13 @@ class ControllerBar():
         data = response.json()
 
         orders = data["data"]
-        l = []
         for x in orders:
+            l = []
             line = x["lines"]
             for x in line:
                 r = self.findLineById(x)
                 l.append(r)
-            self.__orders[x["id"]] = Order(x["id"],x["order"],x["table"][0],x["numclients"],x["client"],x["waiter"],l,x["state"]) 
+            self.__orders[x["id"]] = Order(x["id"],x["order"],x["table"],x["numclients"],x["client"],x["waiter"],x["creationdate"],l,x["state"]) 
 
     # OTROS
     def listProducts(self,category):

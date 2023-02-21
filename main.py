@@ -95,14 +95,13 @@ while True:
         break
     elif opc == 1:
         card()
-        tableName = input("Table: ") # NUMBER TABLE
+        tableName = input("Table id: ") # NUMBER TABLE
         numclients = int(input("Number of clients: ")) # NUMBER CLIENTS
         client = input("Name of the client: ") # NAME CLIENT
         description = input("Description of the table: ") # DESCRIPTION
         
-        table = Table(None,tableName,None,description) # TABLE
-        controller.createTable(table)
-        order = Order(None,None,table.getId(),numclients,client,None,None,False) # ORDER
+        
+        order = Order(None,None,tableName,numclients,client,None,None,False) # ORDER
         controller.createOrder(order)
 
         while True:
@@ -120,11 +119,7 @@ while True:
                 print("ERROR!")
 
     elif opc == 2:
-        controller.loadOrder()
-        orders = controller.getOrders()
-        for id,ord in orders.items():
-            if ord.getState() == "D":
-                print(ord.getId()+" "+ord.getOrder())
+        print()
         
     elif opc == 3:
         id = input("Order id: ")
@@ -188,6 +183,7 @@ while True:
                         controller.updateIngredient(ing)
                     # DELETE
                     elif opc == 3:
+                        listIngredients()
                         id = input("Ingredient id: ")
                         controller.deleteIngredient(id)
                     # LIST
@@ -213,7 +209,7 @@ while True:
                         nameCat = input("Category name: ") # NAME
                         descCat = input("Category description: ") # DESCRIPTION
                         listCategory()
-                        parCat = int(input("Category parent: ")) # PARENT
+                        parCat = int(input("Category parent (0 to null): ")) # PARENT
                         listProducts()
                         prodCat = []
                         while(True):
@@ -263,6 +259,7 @@ while True:
                         controller.updateCategory(cat)
                     # DELETE
                     elif opc == 3:
+                        listCategory()
                         id = input("Category id: ")
                         controller.deleteCategory(id)
                     # LIST
@@ -352,6 +349,7 @@ while True:
                         controller.updateProduct(pro) # CONTROLLER
                     # DELETE
                     elif opc == 3:
+                        listProducts() # SHOW PRODUCTS
                         id = input("Product id: ")
                         controller.deleteProduct(id)
                     # LIST

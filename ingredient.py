@@ -33,5 +33,5 @@ class Ingredient:
         self.__description = description
 
     def toString(self):
-        res = str(self.__id)+ " " + self.__name + " " + str(self.__products) + " " + self.__description
+        res = str(self.__id)+ " / Name: " + self.__name + " / Products: " + str(self.__products) + " / Description: " + str(self.__description)
         return res
